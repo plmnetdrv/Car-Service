@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>List of Cars</title>
+</head>
+<body>
+
+<p>
+<h2>List of All Cars</h2>
+</p>
+
+<form th:action="@{/cars/add-make}" method="get">
+    <input type="submit" value="Add new Make" />
+</form>
+
+
+<form th:action="@{/cars/add-car}" method="get">
+    <input type="submit" value="Add new Car Model" />
+</form>
+
+
+
+
+<tr th:each="model : ${carModels}">
+    <p>
+    <td th:text="${model.getMake().getMakeName()}"> </td>
+    <td th:text="${model.getModelName()}"> </td>
+</p>
+
+
+</tr>
+
+</body>
+</html>

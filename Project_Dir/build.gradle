@@ -1,0 +1,51 @@
+plugins {
+    id 'org.springframework.boot' version '2.1.2.RELEASE'
+    id 'java'
+}
+
+apply plugin: 'io.spring.dependency-management'
+
+group = 'com.telerikacademy'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
+    //security
+    compile 'org.springframework.boot:spring-boot-starter-security'
+    compile 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
+
+    //database
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    compile 'mysql:mysql-connector-java'
+
+    //password
+    compile group: 'org.passay', name: 'passay', version: '1.4.0'
+
+    //email
+    compile 'org.springframework.boot:spring-boot-starter-mail:2.1.4.RELEASE'
+
+    //jQuery
+    compile group: 'org.webjars', name: 'jquery', version: '3.3.1'
+
+    //Bootstrap
+    compile group: 'org.webjars', name: 'bootstrap', version: '4.3.1'
+
+    //Spring Boot Dev Tools (Auto Reload Static Resources)
+    //developmentOnly("org.springframework.boot:spring-boot-devtools")
+
+    // https://mvnrepository.com/artifact/com.itextpdf/itextpdf
+    compile group: 'com.itextpdf', name: 'itextpdf', version: '5.5.13'
+
+//    Swagger UI
+    compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
+    compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
+}

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Cars</title>
+    <div th:replace="fragments/components :: head"></div>
+</head>
+<body>
+<header th:replace="fragments/components :: navbar"></header>
+
+
+<div class="container body-content">
+    <h1>Choose a customer</h1>
+    <select class="selectpicker" id="select-customer" data-style="btn-primary">
+        <option value="All"> All Customers</option>
+        <option
+                th:each="customer :${allCustomers}"
+                th:value="${customer.getCustomerId()}"
+                th:text="${customer.getName()}">
+        </option>
+    </select><br>
+
+    <div class="page-header">
+        <label class="heading"><h1>Cars Table</h1></label>
+        <div class="form-group">
+            <fieldset>
+                <div class="table-responsive">
+                    <div class="table-responsive">
+
+                        <table id="cars-table" class="table table-striped table-bordered display" cellspacing="0"
+                               width="100%">
+                            <thead>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th>Make</th>
+                                <th>Model</th>
+                                <th>Year</th>
+                                <th>License Plate</th>
+                                <th>VIN</th>
+                                <th>View Procedures</th>
+                                <th>Add Procedure</th>
+                            </tr>
+                            </thead>
+                            <tbody id="customer">
+                            <tr th:each="car : ${allCustomersCars}">
+                                <td th:text="${car.getCustomer().getCustomerId()}"></td>
+                                <td th:text="${car.getCustomer().getName()}"></td>
+                                <td th:text="${car.getModel().getMake().getMakeName()}"></td>
+                                <td th:text="${car.getModel().getModelName()}"></td>
+                                <td th:text="${car.getYearOfProduction()}"></td>
+                                <td th:text="${car.getLicensePlate()}"></td>
+                                <td th:text="${car.vinNumber}"></td>
+                                <td>
+                                    <button class="btn btn-outline-primary" title="View Procedures"
+                                            id="view-procedures" th:value="${car.getCustomerCarID()}"
+                                            th:onclick="|viewProcedures(value)|">
+                                        <i class="fas fa-search"></i> View Procedures
+                                    </button>
+                                </td>
+                                <td>
+                                    <button class="btn btn-outline-success" title="Add Procedure"
+                                            id="add-procedures" th:value="${car.getCustomerCarID()}"
+                                            th:onclick="|addProcedure(value)|">
+                                        <i class="fas fa-wrench"></i> Add Procedures
+                                    </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <hr/>
+    </div>
+</div>
+
+<!-- Add Make Modal -->
+<div id="add-make-modal" class="modal fade">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h1 class="modal-title" id="add-modal-title">Add New Make</h1>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <div class="modal-body">
+                <form id="add-make-form" th:action="@{/cars/add-make}" th:object="${make}" th:method="post">
+
+                    <div class="form-group">
+                        <label class="control-label">
+                            Name</label>
+                        <div>
+                            <input type="text" class="form-control input-lg" id="" minlength="3"
+                                   maxlength="45"
+                                   required th:field="*{makeName}">
+                            <small id="nameHelp" class="form-text text-muted">
+                                Make name must be 3-45 characters long.
+                            </small>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <div class="form-group">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-success">Submit</button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Model Modal -->
+<div id="add-model-modal" class="modal fade">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h1 class="modal-title" id="add-model-title">Add New Model</h1>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <div class="modal-body">
+                <form id="add-model-form" th:action="@{/cars/add-car}" th:object="${car}" th:method="post">
+
+                    <div class="form-group">
+                        <select th:field="*{make}" class="form-control" id="style">
+                            <option th:each="make : ${allMakes}"
+                                    th:value="${make.getMakeID()}"
+                                    th:text="${make.getMakeName()}">
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">
+                            Name</label>
+                        <div>
+                            <input type="text" class="form-control input-lg" minlength="3"
+                                   maxlength="45"
+                                   required th:field="*{modelName}">
+                            <small id="nameModelHelp" class="form-text text-muted">
+                                Model name must be 3-45 characters long.
+                            </small>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <div class="form-group">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-success">Submit</button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="fragments/components :: footer"></footer>
+<div th:replace="fragments/components :: js"></div>
+<script th:src="@{/js/cars.js}"></script>
+
+</body>
+</html>

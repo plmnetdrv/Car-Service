@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Car Model</title>
+</head>
+<body>
+<p>
+<h2>Edit Car Model</h2>
+</p>
+
+
+<form action="#" th:action="@{'/cars/edit-carModel/' + ${editCarModel.getModelID()}}" th:object="${editCarModel}" method="post">
+    <ul>
+        <li th:errors="*{make.makeName}" style="color: red"/>
+        <li th:errors="*{modelName}" style="color: red"/>
+
+    </ul>
+    <table>
+
+
+        <tr>
+            <td><label th:text="#{label.makeName}">Make</label></td>
+            <td>
+                <div class="form-group">
+                    <select th:field="*{make}" class="form-control" id="style">
+                        <!--<option th:text="NONE" th:value="0">-&#45;&#45; Select -&#45;&#45;</option>-->
+                        <option th:each="make : ${allMakes}"
+                                th:value="${make.getMakeID()}"
+                                th:text="${make.getMakeName()}">Wireframe
+                        </option>
+                    </select>
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+            <td><label th:text="#{label.modelName}">Model</label></td>
+            <td><input type="text" th:field="*{modelName}"/></td>
+        </tr>
+
+
+        <tr>
+            <td><input type="submit" value="Save"/></td>
+        </tr>
+    </table>
+
+
+</form>
+
+
+
+
+</body>
+</html>
